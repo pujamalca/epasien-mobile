@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $baseUrl = config('epasien.base_url', '');
+        if (app()->isProduction() && !str_starts_with($baseUrl, 'https://')) {
+            throw new \RuntimeException('EPASIEN_BASE_URL harus menggunakan HTTPS di production.');
+        }
     }
 }
