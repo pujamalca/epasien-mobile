@@ -26,11 +26,12 @@ class WebViewController extends Controller
         }
 
         $baseUrl   = $this->api->getBaseUrl();
-        $url       = $baseUrl . '/epasien/indexuser.php?act=' . $act;
         $sessionId = $this->session->getSessionId();
-        $domain    = parse_url($baseUrl, PHP_URL_HOST);
+        $url       = $baseUrl . '/epasien/api/session-entry.php?sid=' . urlencode($sessionId) . '&act=' . $act;
 
-        return view('webview', compact('url', 'sessionId', 'domain'));
+        // Navigasi langsung (top-level) ke EPasien — bukan iframe
+        // Supaya SameSite=Lax cookie bekerja & session valid
+        return redirect()->away($url);
     }
 
     public function sessionExpired()

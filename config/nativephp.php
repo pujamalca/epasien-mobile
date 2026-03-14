@@ -299,7 +299,9 @@ return [
     */
 
     'permissions' => [
-        //
+        'camera'                => true, // upload foto di WebView
+        'read_external_storage' => true, // baca file untuk upload
+        'write_external_storage'=> true, // simpan file download
     ],
 
     /*
