@@ -15,15 +15,16 @@
         </div>
     </div>
 </div>
+@endsection
+
+@push('scripts')
 <script>
 async function loadData() {
     document.getElementById('stateLoad').style.display='flex';
     document.getElementById('stateContent').style.display='none';
     document.getElementById('stateErr').style.display='none';
     try {
-        const res = await apiFetch('/api/akun/info-rs');
-        if (!res.ok) throw new Error();
-        const d = await res.json();
+        const d = await apiFetch('/api/akun/info-rs');
         const info = d.data ?? d ?? {};
         const wrap = document.getElementById('stateContent');
         while (wrap.firstChild) wrap.removeChild(wrap.firstChild);
@@ -53,4 +54,4 @@ async function loadData() {
 }
 loadData();
 </script>
-@endsection
+@endpush

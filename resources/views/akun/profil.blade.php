@@ -31,15 +31,16 @@
         </div>
     </div>
 </div>
+@endsection
+
+@push('scripts')
 <script>
 async function loadProfil() {
     document.getElementById('stateLoad').style.display='flex';
     document.getElementById('stateContent').style.display='none';
     document.getElementById('stateErr').style.display='none';
     try {
-        const res = await apiFetch('/api/akun/profil');
-        if (!res.ok) throw new Error();
-        const d = await res.json();
+        const d = await apiFetch('/api/akun/profil');
         document.getElementById('profilNama').textContent = d.nama ?? '-';
         document.getElementById('profilNoRm').textContent = 'No. RM: ' + (d.no_rm ?? '-');
         document.getElementById('noHp').value = d.no_hp ?? '';
@@ -54,11 +55,12 @@ async function loadProfil() {
 
 document.getElementById('formProfil').addEventListener('submit', async function(e) {
     e.preventDefault();
+    if (document.getElementById('stateContent').style.display === 'none') return;
     const btn = document.getElementById('btnSimpan');
     btn.disabled = true;
     btn.textContent = 'Menyimpan...';
     try {
-        const res = await apiFetch('/api/akun/profil', {
+        const d = await apiFetch('/api/akun/profil', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -66,10 +68,9 @@ document.getElementById('formProfil').addEventListener('submit', async function(
                 alamat: document.getElementById('alamat').value,
             })
         });
-        if (!res.ok) throw new Error();
-        showToast('&#10003;', 'Profil berhasil disimpan');
+        showToast('Profil berhasil disimpan', 'success');
     } catch {
-        showToast('&#10007;', 'Gagal menyimpan profil');
+        showToast('Gagal menyimpan profil', 'error');
     } finally {
         btn.disabled = false;
         btn.textContent = 'Simpan Perubahan';
@@ -78,4 +79,4 @@ document.getElementById('formProfil').addEventListener('submit', async function(
 
 loadProfil();
 </script>
-@endsection
+@endpush

@@ -19,6 +19,9 @@
         </div>
     </div>
 </div>
+@endsection
+
+@push('scripts')
 <script>
 async function loadData() {
     document.getElementById('stateLoad').style.display='flex';
@@ -26,9 +29,7 @@ async function loadData() {
     document.getElementById('stateEmpty').style.display='none';
     document.getElementById('stateErr').style.display='none';
     try {
-        const res = await apiFetch('/api/akun/jadwal-kontrol');
-        if (!res.ok) throw new Error();
-        const data = await res.json();
+        const data = await apiFetch('/api/akun/jadwal-kontrol');
         const list = data.data ?? data ?? [];
         if (!list.length) {
             document.getElementById('stateLoad').style.display='none';
@@ -59,4 +60,4 @@ async function loadData() {
 }
 loadData();
 </script>
-@endsection
+@endpush
