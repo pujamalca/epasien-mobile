@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HasilController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\RadiologyProxyController;
 use App\Http\Controllers\SessionExpiredController;
 use App\Http\Controllers\WebViewController;
 use Illuminate\Support\Facades\Route;
@@ -57,4 +59,28 @@ Route::prefix('api/pendaftaran')->middleware('auth.session')->group(function () 
     Route::get('/antrian',   [PendaftaranController::class, 'apiAntrian']);
     Route::get('/tagihan',   [PendaftaranController::class, 'apiTagihan']);
     Route::post('/booking',  [PendaftaranController::class, 'apiBooking']);
+});
+
+// Hasil — views
+Route::prefix('hasil')->middleware('auth.session')->group(function () {
+    Route::get('/',                 [HasilController::class, 'index'])->name('hasil');
+    Route::get('/riwayat',          [HasilController::class, 'riwayat'])->name('hasil.riwayat');
+    Route::get('/resep',            [HasilController::class, 'resep'])->name('hasil.resep');
+    Route::get('/rekam-medis',      [HasilController::class, 'rekamMedis'])->name('hasil.rekam-medis');
+    Route::get('/lab',              [HasilController::class, 'lab'])->name('hasil.lab');
+    Route::get('/lab/detail',       [HasilController::class, 'labDetail'])->name('hasil.lab-detail');
+    Route::get('/radiologi',        [HasilController::class, 'radiologi'])->name('hasil.radiologi');
+    Route::get('/radiologi/detail', [HasilController::class, 'radiologiDetail'])->name('hasil.radiologi-detail');
+});
+
+// Hasil — API proxy
+Route::prefix('api/hasil')->middleware('auth.session')->group(function () {
+    Route::get('/riwayat',               [HasilController::class, 'apiRiwayat']);
+    Route::get('/resep',                 [HasilController::class, 'apiResep']);
+    Route::get('/rekam-medis',           [HasilController::class, 'apiRekamMedis']);
+    Route::get('/lab/list',              [HasilController::class, 'apiLabList']);
+    Route::get('/lab/detail',            [HasilController::class, 'apiLabDetail']);
+    Route::get('/radiologi/list',        [HasilController::class, 'apiRadiologiList']);
+    Route::get('/radiologi/detail',      [HasilController::class, 'apiRadiologiDetail']);
+    Route::get('/radiologi/foto/{filename}', [RadiologyProxyController::class, 'image']);
 });
