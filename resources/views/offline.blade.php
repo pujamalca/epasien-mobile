@@ -25,7 +25,9 @@
         btn.textContent = 'Memeriksa...';
         btn.disabled = true;
 
-        fetch(baseUrl + '/epasien/api/settings.php', { signal: AbortSignal.timeout(5000) })
+        var ctrl = new AbortController();
+        setTimeout(function () { ctrl.abort(); }, 5000);
+        fetch(baseUrl + '/epasien/api/settings.php', { signal: ctrl.signal })
             .then(function (r) {
                 if (r.ok) {
                     window.location.href = '/';

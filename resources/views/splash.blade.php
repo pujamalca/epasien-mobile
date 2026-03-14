@@ -23,7 +23,9 @@
         window.location.href = path;
     }
 
-    fetch(baseUrl + '/epasien/api/settings.php', { signal: AbortSignal.timeout(8000) })
+    var ctrl = new AbortController();
+    setTimeout(function () { ctrl.abort(); }, 8000);
+    fetch(baseUrl + '/epasien/api/settings.php', { signal: ctrl.signal })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (data) {
             if (data && data.success) {
