@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConsentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\HasilController;
@@ -103,4 +104,21 @@ Route::prefix('api/dokumen')->middleware('auth.session')->group(function () {
     Route::get('/surat-rujukan', [DokumenController::class, 'apiSuratRujukan']);
     Route::get('/resume-medis',  [DokumenController::class, 'apiResumeMedis']);
     Route::get('/kartu-berobat', [DokumenController::class, 'apiKartuBerobat']);
+});
+
+// Consent — views
+Route::prefix('consent')->middleware('auth.session')->group(function () {
+    Route::get('/persetujuan',   [ConsentController::class, 'persetujuan'])->name('consent.persetujuan');
+    Route::get('/penolakan',     [ConsentController::class, 'penolakan'])->name('consent.penolakan');
+    Route::get('/edukasi',       [ConsentController::class, 'edukasi'])->name('consent.edukasi');
+    Route::get('/general',       [ConsentController::class, 'generalConsent'])->name('consent.general-consent');
+    Route::get('/hak-kewajiban', [ConsentController::class, 'hakKewajiban'])->name('consent.hak-kewajiban');
+});
+
+// Consent — API proxy
+Route::prefix('api/consent')->middleware('auth.session')->group(function () {
+    Route::get('/list/{type}',   [ConsentController::class, 'apiList']);
+    Route::get('/edukasi',       [ConsentController::class, 'apiEdukasi']);
+    Route::get('/hak-kewajiban', [ConsentController::class, 'apiHakKewajiban']);
+    Route::post('/sign/{type}',  [ConsentController::class, 'apiSign']);
 });
