@@ -13,10 +13,8 @@ class DashboardController extends Controller
         if (!$this->session->isLoggedIn()) {
             return redirect()->route('login');
         }
-
         return view('dashboard', [
-            'pasien' => $this->session->getPasien(),
-            'menus'  => config('epasien.menus'),
+            'pasien' => $this->session->getPasien() ?? [],
         ]);
     }
 }

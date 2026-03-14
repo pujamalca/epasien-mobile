@@ -1,66 +1,46 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Dashboard — EPasien</title>
-    @vite(['resources/css/app.css'])
-</head>
-<body>
-<div class="dashboard">
-
-    {{-- Header pasien --}}
-    <div class="dashboard-header">
-        <div class="salam">Selamat datang,</div>
-        <div class="nama-pasien">{{ $pasien['nama'] ?? 'Pasien' }}</div>
-        <div class="no-rm">No. RM: {{ $pasien['no_rm'] ?? '-' }}</div>
+@extends('layouts.app')
+@section('title', 'Beranda')
+@section('content')
+<div class="page">
+    <div class="topbar">
+        <div class="topbar-title">EPasien</div>
     </div>
+    <div class="page-content">
+        <div class="card" style="margin-bottom:20px;background:var(--color-primary);color:#fff;border:none;">
+            <div style="font-size:var(--font-sm);opacity:.8;">Selamat datang</div>
+            <div style="font-size:var(--font-lg);font-weight:700;margin:4px 0;">
+                {{ $pasien['nm_pasien'] ?? $pasien['nama'] ?? 'Pasien' }}
+            </div>
+            <div style="font-size:var(--font-sm);opacity:.8;">
+                No. RM: {{ $pasien['no_rkm_medis'] ?? $pasien['no_rm'] ?? '-' }}
+            </div>
+        </div>
 
-    {{-- Menu per grup --}}
-    @foreach ($menus as $grup)
-        <div class="menu-section">
-            <div class="menu-section-title">{{ $grup['group'] }}</div>
-            <div class="menu-grid">
-                @foreach ($grup['items'] as $item)
-                    @if ($item['act'] === '__logout__')
-                        <form method="POST" action="{{ route('logout') }}" style="display:contents;">
-                            @csrf
-                            <button type="submit" class="menu-item logout-item">
-                                <span class="menu-icon">{{ $item['icon'] }}</span>
-                                <span class="menu-label">{{ $item['label'] }}</span>
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('webview', ['act' => $item['act']]) }}" class="menu-item">
-                            <span class="menu-icon">{{ $item['icon'] }}</span>
-                            <span class="menu-label">{{ $item['label'] }}</span>
-                        </a>
-                    @endif
+        @foreach(config('epasien.menus', []) as $grup)
+        <div class="section">
+            <div class="section-title">{{ $grup['group'] }}</div>
+            <div style="background:var(--color-card);border-radius:var(--radius-md);border:1px solid var(--color-border);overflow:hidden;">
+                @foreach($grup['items'] as $item)
+                @if($item['act'] !== '__logout__')
+                <a href="{{ route('menu.dispatch', ['act' => $item['act']]) }}"
+                   class="card-row" style="text-decoration:none;color:var(--color-text);">
+                    <span class="card-icon">{{ $item['icon'] }}</span>
+                    <span class="card-label">{{ $item['label'] }}</span>
+                    <span class="card-chevron">&#8250;</span>
+                </a>
+                @else
+                <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                    @csrf
+                    <button type="submit" class="card-row" style="width:100%;border:none;background:none;cursor:pointer;text-align:left;">
+                        <span class="card-icon">{{ $item['icon'] }}</span>
+                        <span class="card-label" style="color:var(--color-danger);">{{ $item['label'] }}</span>
+                    </button>
+                </form>
+                @endif
                 @endforeach
             </div>
         </div>
-    @endforeach
-
+        @endforeach
+    </div>
 </div>
-
-{{-- Bottom Navigation --}}
-<nav class="bottom-nav">
-    <a href="{{ route('dashboard') }}" class="nav-item active">
-        <span class="nav-icon">🏠</span>
-        <span>Home</span>
-    </a>
-    <a href="{{ route('webview', ['act' => 'FormBooking']) }}" class="nav-item">
-        <span class="nav-icon">📋</span>
-        <span>Booking</span>
-    </a>
-    <a href="{{ route('webview', ['act' => 'listpengumuman']) }}" class="nav-item">
-        <span class="nav-icon">🔔</span>
-        <span>Info</span>
-    </a>
-    <a href="{{ route('webview', ['act' => 'ProfilPasien']) }}" class="nav-item">
-        <span class="nav-icon">👤</span>
-        <span>Profil</span>
-    </a>
-</nav>
-</body>
-</html>
+@endsection
