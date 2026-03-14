@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\SessionExpiredController;
 use App\Http\Controllers\WebViewController;
 use Illuminate\Support\Facades\Route;
@@ -38,3 +39,22 @@ Route::get('/webview', [WebViewController::class, 'open'])->name('webview');
 
 // Offline
 Route::get('/offline', fn () => view('offline'))->name('offline');
+
+// Pendaftaran — views
+Route::prefix('pendaftaran')->middleware('auth.session')->group(function () {
+    Route::get('/',        [PendaftaranController::class, 'index'])->name('pendaftaran');
+    Route::get('/jadwal',  [PendaftaranController::class, 'jadwal'])->name('pendaftaran.jadwal');
+    Route::get('/antrian', [PendaftaranController::class, 'antrian'])->name('pendaftaran.antrian');
+    Route::get('/poli',    [PendaftaranController::class, 'poli'])->name('pendaftaran.poli');
+    Route::get('/tagihan', [PendaftaranController::class, 'tagihan'])->name('pendaftaran.tagihan');
+    Route::get('/booking', [PendaftaranController::class, 'booking'])->name('pendaftaran.booking');
+});
+
+// Pendaftaran — API proxy
+Route::prefix('api/pendaftaran')->middleware('auth.session')->group(function () {
+    Route::get('/poli-list', [PendaftaranController::class, 'apiPoliList']);
+    Route::get('/jadwal',    [PendaftaranController::class, 'apiJadwal']);
+    Route::get('/antrian',   [PendaftaranController::class, 'apiAntrian']);
+    Route::get('/tagihan',   [PendaftaranController::class, 'apiTagihan']);
+    Route::post('/booking',  [PendaftaranController::class, 'apiBooking']);
+});
