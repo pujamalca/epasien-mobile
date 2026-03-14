@@ -29,6 +29,9 @@
     <a href="/dokumen" class="bottom-nav-item {{ Request::is('dokumen*') ? 'active' : '' }}">
         <span class="nav-icon">&#128196;</span>Dokumen
     </a>
+    <a href="/notifikasi" class="bottom-nav-item {{ Request::is('notifikasi*') ? 'active' : '' }}">
+        <span class="nav-icon">&#128276;</span>Notif
+    </a>
     <a href="/akun" class="bottom-nav-item {{ Request::is('akun*') ? 'active' : '' }}">
         <span class="nav-icon">&#128100;</span>Akun
     </a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\HasilController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\RadiologyProxyController;
 use App\Http\Controllers\SessionExpiredController;
@@ -37,6 +38,17 @@ Route::get('/session-expired', [SessionExpiredController::class, 'index'])
 // Ping keepalive
 Route::get('/api/ping', fn() => response()->json(['ok' => true]))
     ->middleware('auth.session');
+
+// Notifikasi
+Route::get('/notifikasi', [NotifikasiController::class, 'index'])
+    ->name('notifikasi')
+    ->middleware('auth.session');
+
+// Deep link handler: epasien://act/X → menu.dispatch
+Route::get('/deeplink', function (\Illuminate\Http\Request $request) {
+    $act = preg_replace('/[^a-zA-Z0-9\-]/', '', $request->query('act', 'HomeUser'));
+    return redirect()->route('menu.dispatch', ['act' => $act]);
+})->name('deeplink')->middleware('auth.session');
 
 // Offline
 Route::get('/offline', fn () => view('offline'))->name('offline');

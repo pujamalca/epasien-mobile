@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\EpasienApiService;
+use App\Services\FcmService;
 use App\Services\SessionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -12,6 +13,7 @@ class AuthController extends Controller
     public function __construct(
         private EpasienApiService $api,
         private SessionService $session,
+        private FcmService $fcm,
     ) {}
 
     public function showLogin()
@@ -54,6 +56,9 @@ class AuthController extends Controller
 
         Cache::forget($key);
         $this->session->store($result['phpsessid'], $result['pasien']);
+
+        // Daftarkan FCM token ke server (async via event TokenGenerated)
+        $this->fcm->enroll();
 
         return response()->json(['success' => true]);
     }
