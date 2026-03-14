@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\HasilController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PendaftaranController;
@@ -83,4 +84,23 @@ Route::prefix('api/hasil')->middleware('auth.session')->group(function () {
     Route::get('/radiologi/list',        [HasilController::class, 'apiRadiologiList']);
     Route::get('/radiologi/detail',      [HasilController::class, 'apiRadiologiDetail']);
     Route::get('/radiologi/foto/{filename}', [RadiologyProxyController::class, 'image']);
+});
+
+// Dokumen — views
+Route::prefix('dokumen')->middleware('auth.session')->group(function () {
+    Route::get('/',              [DokumenController::class, 'index'])->name('dokumen');
+    Route::get('/surat-kontrol', [DokumenController::class, 'suratKontrol'])->name('dokumen.surat-kontrol');
+    Route::get('/surat-sakit',   [DokumenController::class, 'suratSakit'])->name('dokumen.surat-sakit');
+    Route::get('/surat-rujukan', [DokumenController::class, 'suratRujukan'])->name('dokumen.surat-rujukan');
+    Route::get('/resume-medis',  [DokumenController::class, 'resumeMedis'])->name('dokumen.resume-medis');
+    Route::get('/kartu-berobat', [DokumenController::class, 'kartuBerobat'])->name('dokumen.kartu-berobat');
+});
+
+// Dokumen — API proxy
+Route::prefix('api/dokumen')->middleware('auth.session')->group(function () {
+    Route::get('/surat-kontrol', [DokumenController::class, 'apiSuratKontrol']);
+    Route::get('/surat-sakit',   [DokumenController::class, 'apiSuratSakit']);
+    Route::get('/surat-rujukan', [DokumenController::class, 'apiSuratRujukan']);
+    Route::get('/resume-medis',  [DokumenController::class, 'apiResumeMedis']);
+    Route::get('/kartu-berobat', [DokumenController::class, 'apiKartuBerobat']);
 });
