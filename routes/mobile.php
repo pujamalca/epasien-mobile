@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsentController;
 use App\Http\Controllers\DashboardController;
@@ -9,7 +10,6 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\RadiologyProxyController;
 use App\Http\Controllers\SessionExpiredController;
-use App\Http\Controllers\WebViewController;
 use Illuminate\Support\Facades\Route;
 
 // Splash
@@ -37,9 +37,6 @@ Route::get('/session-expired', [SessionExpiredController::class, 'index'])
 // Ping keepalive
 Route::get('/api/ping', fn() => response()->json(['ok' => true]))
     ->middleware('auth.session');
-
-// WebView
-Route::get('/webview', [WebViewController::class, 'open'])->name('webview');
 
 // Offline
 Route::get('/offline', fn () => view('offline'))->name('offline');
@@ -121,4 +118,22 @@ Route::prefix('api/consent')->middleware('auth.session')->group(function () {
     Route::get('/edukasi',       [ConsentController::class, 'apiEdukasi']);
     Route::get('/hak-kewajiban', [ConsentController::class, 'apiHakKewajiban']);
     Route::post('/sign/{type}',  [ConsentController::class, 'apiSign']);
+});
+
+// Akun — views
+Route::prefix('akun')->middleware('auth.session')->group(function () {
+    Route::get('/',               [AkunController::class, 'index'])->name('akun');
+    Route::get('/profil',         [AkunController::class, 'profil'])->name('akun.profil');
+    Route::get('/pengumuman',     [AkunController::class, 'pengumuman'])->name('akun.pengumuman');
+    Route::get('/jadwal-kontrol', [AkunController::class, 'jadwalKontrol'])->name('akun.jadwal-kontrol');
+    Route::get('/info-rs',        [AkunController::class, 'infoRs'])->name('akun.info-rs');
+});
+
+// Akun — API proxy
+Route::prefix('api/akun')->middleware('auth.session')->group(function () {
+    Route::get('/profil',          [AkunController::class, 'apiProfil']);
+    Route::post('/profil',         [AkunController::class, 'apiUpdateProfil']);
+    Route::get('/pengumuman',      [AkunController::class, 'apiPengumuman']);
+    Route::get('/jadwal-kontrol',  [AkunController::class, 'apiJadwalKontrol']);
+    Route::get('/info-rs',         [AkunController::class, 'apiInfoRs']);
 });
