@@ -16,6 +16,18 @@ use Illuminate\Support\Facades\Route;
 // Splash
 Route::get('/', fn () => view('splash'))->name('splash');
 
+// Health check — proxy ke server SIMRS, tidak butuh auth, tidak cross-origin dari JS
+Route::get('/api/health', function () {
+    try {
+        $res = \Illuminate\Support\Facades\Http::timeout(8)
+            ->get(config('epasien.base_url') . '/epasien/api/settings.php');
+        if ($res->successful()) {
+            return response()->json(array_merge(['ok' => true], $res->json()));
+        }
+    } catch (\Exception $e) {}
+    return response()->json(['ok' => false], 503);
+})->name('api.health');
+
 // Auth
 Route::get('/login',  [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post')->middleware('throttle:5,1');

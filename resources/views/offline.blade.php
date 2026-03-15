@@ -18,16 +18,12 @@
 </div>
 
 <script>
-    var baseUrl = '{{ config("epasien.base_url") }}';
-
     function coba() {
         var btn = document.getElementById('btnRetry');
         btn.textContent = 'Memeriksa...';
         btn.disabled = true;
 
-        var ctrl = new AbortController();
-        setTimeout(function () { ctrl.abort(); }, 5000);
-        fetch(baseUrl + '/epasien/api/settings.php', { signal: ctrl.signal })
+        fetch('/api/health')
             .then(function (r) {
                 if (r.ok) {
                     window.location.href = '/';

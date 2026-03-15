@@ -16,16 +16,13 @@
 
 <script>
 (function () {
-    var baseUrl = '{{ config("epasien.base_url") }}';
     var isLoggedIn = {{ app(\App\Services\SessionService::class)->isLoggedIn() ? 'true' : 'false' }};
 
     function redirect(path) {
         window.location.href = path;
     }
 
-    var ctrl = new AbortController();
-    setTimeout(function () { ctrl.abort(); }, 8000);
-    fetch(baseUrl + '/epasien/api/settings.php', { signal: ctrl.signal })
+    fetch('/api/health')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (data) {
             if (data && data.success) {
