@@ -10,7 +10,7 @@
         <div id="stateLoad" class="state-loading"><div class="spinner"></div><div>Memuat...</div></div>
         <div id="stateList" style="display:none;"></div>
         <div id="stateEmpty" class="state-empty" style="display:none;">
-            <div class="state-icon">&#128197;</div>
+            <div class="state-icon">📅</div>
             <div>Tidak ada jadwal kontrol</div>
         </div>
         <div id="stateErr" class="state-error" style="display:none;">
@@ -58,6 +58,9 @@ async function loadData() {
         document.getElementById('stateErr').style.display='block';
     }
 }
-loadData();
 </script>
+@endpush
+
+@push('init')
+<script type="module">loadData();</script>
 @endpush

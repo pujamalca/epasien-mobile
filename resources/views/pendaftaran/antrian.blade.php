@@ -39,6 +39,9 @@ async function loadAntrian() {
         showError('container', e.message, loadAntrian);
     }
 }
-loadAntrian();
 </script>
+@endpush
+
+@push('init')
+<script type="module">loadAntrian();</script>
 @endpush

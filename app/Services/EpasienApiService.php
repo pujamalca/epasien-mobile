@@ -88,7 +88,7 @@ class EpasienApiService
     public function get(string $endpoint, string $sessionId): array
     {
         try {
-            $res = Http::timeout(30)
+            $res = Http::timeout(10)
                 ->withHeaders(['X-Session-Id' => $sessionId])
                 ->get($this->getBaseUrl() . '/epasien/api/' . $endpoint);
             return $res->json() ?? ['success' => false, 'message' => 'Empty response'];
@@ -100,7 +100,7 @@ class EpasienApiService
     public function post(string $endpoint, array $body, string $sessionId): array
     {
         try {
-            $res = Http::timeout(30)
+            $res = Http::timeout(10)
                 ->withHeaders(['X-Session-Id' => $sessionId])
                 ->post($this->getBaseUrl() . '/epasien/api/' . $endpoint, $body);
             return $res->json() ?? ['success' => false, 'message' => 'Empty response'];

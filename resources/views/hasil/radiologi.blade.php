@@ -9,8 +9,8 @@
     <div class="page-content"><div id="container"></div></div>
 </div>
 @endsection
-@push('scripts')
-<script>
+@push('init')
+<script type="module">
 (async function () {
     showLoading('container');
     try {

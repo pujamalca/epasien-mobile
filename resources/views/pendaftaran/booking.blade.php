@@ -85,6 +85,9 @@ async function doBooking() {
     }
 }
 
-init();
 </script>
+@endpush
+
+@push('init')
+<script type="module">init();</script>
 @endpush

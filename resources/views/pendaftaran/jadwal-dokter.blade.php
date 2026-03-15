@@ -40,7 +40,7 @@ async function loadJadwal() {
         var c = document.getElementById('container');
         c.textContent = '';
         if (!data || !data.data || data.data.length === 0) {
-            showEmpty('container', '&#128197;', 'Tidak ada jadwal');
+            showEmpty('container', '📅', 'Tidak ada jadwal');
             return;
         }
         data.data.forEach(function (j) {
@@ -58,7 +58,9 @@ async function loadJadwal() {
     }
 }
 
-loadPoli();
-loadJadwal();
 </script>
+@endpush
+
+@push('init')
+<script type="module">loadPoli(); loadJadwal();</script>
 @endpush

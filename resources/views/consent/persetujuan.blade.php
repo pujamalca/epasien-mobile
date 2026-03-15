@@ -108,7 +108,7 @@
             var c = document.getElementById('container');
             c.textContent = '';
             if (!data || !data.data || data.data.length === 0) {
-                showEmpty('container', '&#9997;&#65039;', 'Tidak ada persetujuan tindakan');
+                showEmpty('container', '✍️', 'Tidak ada persetujuan tindakan');
                 return;
             }
             data.data.forEach(function (d) {
@@ -130,7 +130,12 @@
         }
     }
 
-    loadList();
+    window._loadPersetujuan = loadList;
 })();
+
 </script>
+@endpush
+
+@push('init')
+<script type="module">window._loadPersetujuan && window._loadPersetujuan();</script>
 @endpush

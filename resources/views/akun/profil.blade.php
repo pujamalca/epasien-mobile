@@ -77,6 +77,9 @@ document.getElementById('formProfil').addEventListener('submit', async function(
     }
 });
 
-loadProfil();
 </script>
+@endpush
+
+@push('init')
+<script type="module">loadProfil();</script>
 @endpush

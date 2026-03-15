@@ -9,8 +9,8 @@
     <div class="page-content"><div id="container"></div></div>
 </div>
 @endsection
-@push('scripts')
-<script>
+@push('init')
+<script type="module">
 var noRawat = new URLSearchParams(location.search).get('no_rawat') || '';
 (async function () {
     showLoading('container');

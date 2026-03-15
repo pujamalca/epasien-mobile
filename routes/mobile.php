@@ -155,9 +155,10 @@ Route::prefix('akun')->middleware('auth.session')->group(function () {
 
 // Akun — API proxy
 Route::prefix('api/akun')->middleware('auth.session')->group(function () {
-    Route::get('/profil',          [AkunController::class, 'apiProfil']);
-    Route::post('/profil',         [AkunController::class, 'apiUpdateProfil']);
-    Route::get('/pengumuman',      [AkunController::class, 'apiPengumuman']);
-    Route::get('/jadwal-kontrol',  [AkunController::class, 'apiJadwalKontrol']);
-    Route::get('/info-rs',         [AkunController::class, 'apiInfoRs']);
+    Route::get('/profil',           [AkunController::class, 'apiProfil']);
+    Route::post('/profil',          [AkunController::class, 'apiUpdateProfil']);
+    Route::post('/ganti-password',  [AkunController::class, 'apiGantiPassword']);
+    Route::get('/pengumuman',       [AkunController::class, 'apiPengumuman']);
+    Route::get('/jadwal-kontrol',   [AkunController::class, 'apiJadwalKontrol']);
+    Route::get('/info-rs',          [AkunController::class, 'apiInfoRs']);
 });

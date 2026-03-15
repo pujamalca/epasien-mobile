@@ -15,7 +15,7 @@
         {{-- Menu list --}}
         <div class="card" style="padding:0;overflow:hidden;">
             <a href="{{ route('akun.profil') }}" class="card-row">
-                <span class="card-icon">&#128100;</span>
+                <span class="card-icon">👤</span>
                 <span class="card-label">Profil Saya</span>
                 <span class="card-chevron">&#8250;</span>
             </a>
@@ -25,7 +25,7 @@
                 <span class="card-chevron">&#8250;</span>
             </a>
             <a href="{{ route('akun.jadwal-kontrol') }}" class="card-row">
-                <span class="card-icon">&#128197;</span>
+                <span class="card-icon">📅</span>
                 <span class="card-label">Jadwal Kontrol</span>
                 <span class="card-chevron">&#8250;</span>
             </a>

@@ -34,4 +34,15 @@ class AkunController extends Controller
             $this->api->post('v2/profil-update.php', $request->only(['no_hp', 'alamat']), $this->session->getSessionId())
         );
     }
+
+    public function apiGantiPassword(Request $request)
+    {
+        $request->validate([
+            'password_lama' => ['required', 'string', 'min:1', 'max:50'],
+            'password_baru' => ['required', 'string', 'min:6', 'max:50'],
+        ]);
+        return response()->json(
+            $this->api->post('v2/ganti-password.php', $request->only(['password_lama', 'password_baru']), $this->session->getSessionId())
+        );
+    }
 }

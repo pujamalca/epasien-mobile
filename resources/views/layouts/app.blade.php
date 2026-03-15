@@ -21,19 +21,19 @@
         <span class="nav-icon">&#127968;</span>Beranda
     </a>
     <a href="/pendaftaran" class="bottom-nav-item {{ Request::is('pendaftaran*') ? 'active' : '' }}">
-        <span class="nav-icon">&#128203;</span>Daftar
+        <span class="nav-icon">📋</span>Daftar
     </a>
     <a href="/hasil" class="bottom-nav-item {{ Request::is('hasil*') ? 'active' : '' }}">
-        <span class="nav-icon">&#129514;</span>Hasil
+        <span class="nav-icon">🧪</span>Hasil
     </a>
     <a href="/dokumen" class="bottom-nav-item {{ Request::is('dokumen*') ? 'active' : '' }}">
-        <span class="nav-icon">&#128196;</span>Dokumen
+        <span class="nav-icon">📄</span>Dokumen
     </a>
     <a href="/notifikasi" class="bottom-nav-item {{ Request::is('notifikasi*') ? 'active' : '' }}">
-        <span class="nav-icon">&#128276;</span>Notif
+        <span class="nav-icon">🔔</span>Notif
     </a>
     <a href="/akun" class="bottom-nav-item {{ Request::is('akun*') ? 'active' : '' }}">
-        <span class="nav-icon">&#128100;</span>Akun
+        <span class="nav-icon">👤</span>Akun
     </a>
 </nav>
 @endif
@@ -46,6 +46,7 @@
 
 @vite(['resources/js/api.js'])
 @stack('scripts')
+@stack('init')
 
 <script>
 setInterval(function () {

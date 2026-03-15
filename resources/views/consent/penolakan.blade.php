@@ -108,7 +108,7 @@
             var c = document.getElementById('container');
             c.textContent = '';
             if (!data || !data.data || data.data.length === 0) {
-                showEmpty('container', '&#9997;&#65039;', 'Tidak ada penolakan tindakan');
+                showEmpty('container', '✍️', 'Tidak ada penolakan tindakan');
                 return;
             }
             data.data.forEach(function (d) {
@@ -130,7 +130,12 @@
         }
     }
 
-    loadList();
+    window._loadPenolakan = loadList;
 })();
+
 </script>
+@endpush
+
+@push('init')
+<script type="module">window._loadPenolakan && window._loadPenolakan();</script>
 @endpush

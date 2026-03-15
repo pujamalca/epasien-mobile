@@ -41,6 +41,9 @@ async function loadTagihan() {
         showError('container', e.message, loadTagihan);
     }
 }
-loadTagihan();
 </script>
+@endpush
+
+@push('init')
+<script type="module">loadTagihan();</script>
 @endpush

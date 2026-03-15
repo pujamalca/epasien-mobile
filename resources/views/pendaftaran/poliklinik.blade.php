@@ -37,6 +37,9 @@ async function loadPoli() {
         showError('container', e.message, loadPoli);
     }
 }
-loadPoli();
 </script>
+@endpush
+
+@push('init')
+<script type="module">loadPoli();</script>
 @endpush

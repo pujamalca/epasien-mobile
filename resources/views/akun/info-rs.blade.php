@@ -52,6 +52,9 @@ async function loadData() {
         document.getElementById('stateErr').style.display='block';
     }
 }
-loadData();
 </script>
+@endpush
+
+@push('init')
+<script type="module">loadData();</script>
 @endpush

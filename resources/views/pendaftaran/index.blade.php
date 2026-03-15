@@ -8,11 +8,11 @@
     <div class="page-content">
         <div class="menu-grid">
             <a href="{{ route('pendaftaran.jadwal') }}" class="menu-item">
-                <div class="menu-icon">&#128197;</div>
+                <div class="menu-icon">📅</div>
                 <div class="menu-label">Jadwal Dokter</div>
             </a>
             <a href="{{ route('pendaftaran.booking') }}" class="menu-item">
-                <div class="menu-icon">&#128203;</div>
+                <div class="menu-icon">📋</div>
                 <div class="menu-label">Booking</div>
             </a>
             <a href="{{ route('pendaftaran.antrian') }}" class="menu-item">

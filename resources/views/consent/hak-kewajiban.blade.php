@@ -9,15 +9,15 @@
     <div class="page-content"><div id="container"></div></div>
 </div>
 @endsection
-@push('scripts')
-<script>
+@push('init')
+<script type="module">
 (async function () {
     showLoading('container');
     try {
         var data = await apiFetch('/api/consent/hak-kewajiban');
         var c = document.getElementById('container');
         c.textContent = '';
-        if (!data || !data.data) { showEmpty('container', '&#9878;&#65039;', 'Data tidak tersedia'); return; }
+        if (!data || !data.data) { showEmpty('container', '⚖️', 'Data tidak tersedia'); return; }
         var d = data.data;
         if (d.isi_hak) {
             var hakCard = el('div', { className: 'card', style: 'margin-bottom:16px;' });

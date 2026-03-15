@@ -9,8 +9,8 @@
     <div class="page-content"><div id="container"></div></div>
 </div>
 @endsection
-@push('scripts')
-<script>
+@push('init')
+<script type="module">
 var noRawat = new URLSearchParams(location.search).get('no_rawat') || '';
 (async function () {
     showLoading('container');
@@ -18,7 +18,7 @@ var noRawat = new URLSearchParams(location.search).get('no_rawat') || '';
         var data = await apiFetch('/api/hasil/lab/detail?no_rawat=' + encodeURIComponent(noRawat));
         var c = document.getElementById('container');
         c.textContent = '';
-        if (!data || !data.data || data.data.length === 0) { showEmpty('container', '&#129514;', 'Tidak ada detail'); return; }
+        if (!data || !data.data || data.data.length === 0) { showEmpty('container', '🧪', 'Tidak ada detail'); return; }
         data.data.forEach(function (d) {
             var row = el('div', { className: 'card', style: 'margin-bottom:8px;' });
             row.appendChild(el('div', { style: 'font-weight:600;' }, d.nama_item));

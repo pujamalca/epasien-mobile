@@ -9,15 +9,15 @@
     <div class="page-content"><div id="container"></div></div>
 </div>
 @endsection
-@push('scripts')
-<script>
+@push('init')
+<script type="module">
 (async function () {
     showLoading('container');
     try {
         var data = await apiFetch('/api/hasil/resep');
         var c = document.getElementById('container');
         c.textContent = '';
-        if (!data || !data.data || data.data.length === 0) { showEmpty('container', '&#128138;', 'Belum ada resep'); return; }
+        if (!data || !data.data || data.data.length === 0) { showEmpty('container', '💊', 'Belum ada resep'); return; }
         data.data.forEach(function (d) {
             var row = el('div', { className: 'card', style: 'margin-bottom:8px;' });
             row.appendChild(el('div', { style: 'font-size:var(--font-sm);color:var(--color-text-muted);' }, d.tgl_peresepan));
