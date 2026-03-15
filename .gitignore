@@ -25,3 +25,5 @@ Thumbs.db
 
 # Credential files (keystores, private keys, etc.)
 /credentials/
+*.keystore
+*.jks

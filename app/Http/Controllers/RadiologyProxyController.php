@@ -30,7 +30,11 @@ class RadiologyProxyController extends Controller
                 return response()->json(['error' => 'Format tidak didukung, hubungi RS'], 415);
             }
 
-            $contentType = $response->header('Content-Type') ?? 'image/jpeg';
+            $contentType = strtolower(explode(';', $response->header('Content-Type') ?? '')[0]);
+            $allowed     = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
+            if (!in_array($contentType, $allowed, true)) {
+                abort(415);
+            }
             return response($response->body(), 200)
                 ->header('Content-Type', $contentType)
                 ->header('Cache-Control', 'private, max-age=300');

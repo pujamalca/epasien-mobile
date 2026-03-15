@@ -153,7 +153,7 @@
                 document.getElementById('loginNamaRS').textContent = data.nama_rs;
                 document.title = 'Login — ' + data.nama_rs;
             }
-            if (data.logo_url) {
+            if (data.logo_url && /^https?:\/\//.test(data.logo_url)) {
                 var img = document.createElement('img');
                 img.src = data.logo_url;
                 img.alt = 'Logo';
