@@ -73,7 +73,7 @@
         <div class="card" style="margin-top:12px;margin-bottom:24px;">
             <div style="font-weight:600;margin-bottom:8px;">🛠️ Dibangun dengan</div>
             <div style="font-size:13px;color:var(--color-text-muted);line-height:1.8;">
-                Laravel 10 · NativePHP for Android<br>
+                Laravel 12 · NativePHP for Android<br>
                 SIMRS Khanza · Firebase FCM
             </div>
         </div>

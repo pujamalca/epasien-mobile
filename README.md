@@ -159,7 +159,7 @@ Setiap dukungan sangat berarti dan membantu pengembangan aplikasi ini. Terima ka
 
 ## Tech Stack
 
-- [Laravel 10](https://laravel.com)
+- [Laravel 12](https://laravel.com)
 - [NativePHP for Android](https://nativephp.com)
 - [SIMRS Khanza](https://github.com/mas-elkhanza/SIMRS-Khanza) (backend)
 - Vanilla JS + Blade Templates
