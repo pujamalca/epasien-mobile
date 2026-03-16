@@ -34,6 +34,11 @@
                 <span class="card-label">Informasi RS</span>
                 <span class="card-chevron">&#8250;</span>
             </a>
+            <a href="{{ route('akun.tentang') }}" class="card-row">
+                <span class="card-icon">ℹ️</span>
+                <span class="card-label">Tentang Aplikasi</span>
+                <span class="card-chevron">&#8250;</span>
+            </a>
         </div>
         {{-- Logout --}}
         <form method="POST" action="{{ route('logout') }}" style="margin-top:16px;">

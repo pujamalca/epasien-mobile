@@ -151,6 +151,7 @@ Route::prefix('akun')->middleware('auth.session')->group(function () {
     Route::get('/pengumuman',     [AkunController::class, 'pengumuman'])->name('akun.pengumuman');
     Route::get('/jadwal-kontrol', [AkunController::class, 'jadwalKontrol'])->name('akun.jadwal-kontrol');
     Route::get('/info-rs',        [AkunController::class, 'infoRs'])->name('akun.info-rs');
+    Route::get('/tentang',        [AkunController::class, 'tentang'])->name('akun.tentang');
 });
 
 // Akun — API proxy

@@ -18,6 +18,7 @@ class AkunController extends Controller
     public function pengumuman()   { return view('akun.pengumuman'); }
     public function jadwalKontrol(){ return view('akun.jadwal-kontrol'); }
     public function infoRs()       { return view('akun.info-rs'); }
+    public function tentang()      { return view('akun.tentang'); }
 
     public function apiProfil()        { return response()->json($this->api->get('v2/profil-get.php', $this->session->getSessionId())); }
     public function apiPengumuman()    { return response()->json($this->api->get('v2/pengumuman.php', $this->session->getSessionId())); }
