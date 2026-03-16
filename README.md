@@ -1,59 +1,166 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# EPasien Mobile
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi mobile pasien berbasis Android yang dibangun dengan **Laravel** + **NativePHP**. Aplikasi ini menghubungkan pasien dengan data medis mereka langsung dari sistem SIMRS Khanza yang berjalan di rumah sakit atau klinik.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Autentikasi
+- Login menggunakan No. Rekam Medis + password
+- Session terenkripsi (AES-256)
+- Rate limiting login (5 percobaan / 15 menit)
+- Migrasi password otomatis dari AES (SIMRS lama) ke bcrypt
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Pendaftaran
+- **Jadwal Dokter** — lihat jadwal praktek dokter per poliklinik
+- **Antrian** — cek nomor antrian hari ini
+- **Daftar Poliklinik** — lihat poli/unit yang tersedia
+- **Booking Online** — daftar antrian dari HP untuk tanggal ke depan
+- **Tagihan** — lihat rincian tagihan kunjungan
 
-## Learning Laravel
+### Hasil Medis
+- **Riwayat Periksa** — histori kunjungan pasien
+- **Resep** — daftar obat yang diresepkan
+- **Rekam Medis** — catatan medis per kunjungan
+- **Hasil Laboratorium** — hasil pemeriksaan lab beserta nilai normal
+- **Hasil Radiologi** — laporan + foto/PDF hasil radiologi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Dokumen
+- **Surat Kontrol** — surat jadwal kontrol berikutnya
+- **Surat Sakit** — surat keterangan sakit
+- **Surat Rujukan** — surat rujukan ke RS lain
+- **Resume Medis** — ringkasan medis pasien
+- **Kartu Berobat** — kartu identitas pasien digital
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Informed Consent (Digital)
+- **Persetujuan Tindakan** — tanda tangan digital persetujuan medis
+- **Penolakan Tindakan** — tanda tangan digital penolakan medis
+- **General Consent** — persetujuan umum pelayanan RS
+- **Edukasi Pasien** — materi edukasi dari RS
+- **Hak & Kewajiban** — informasi hak dan kewajiban pasien
 
-## Laravel Sponsors
+### Akun
+- Lihat dan update profil (alamat, no. HP)
+- Ganti password
+- Pengumuman dari RS
+- Jadwal kontrol berikutnya
+- Informasi kontak & jam operasional RS
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Lainnya
+- **Notifikasi** — push notification via Firebase FCM
+- **Offline page** — halaman fallback saat tidak ada koneksi
+- **Deep link** — navigasi langsung via `epasien://act/X`
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Arsitektur
 
-## Contributing
+```
+[Android Device]
+  └─ NativePHP menjalankan Laravel app (http://127.0.0.1)
+       └─ HTTP calls ──► [Server RS] epasien/api/v2/ (PHP native + MySQL SIMRS Khanza)
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **epasien-mobile** — frontend Laravel (Blade views, Controllers sebagai proxy)
+- **epasien** — backend PHP native (API v2, langsung konek ke MySQL SIMRS Khanza)
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Persyaratan
 
-## Security Vulnerabilities
+| Komponen | Versi |
+|----------|-------|
+| PHP | >= 8.1 |
+| Laravel | 10.x |
+| NativePHP for Android | latest |
+| JDK | 17 (Eclipse Temurin direkomendasikan) |
+| Android SDK | API 33+ |
+| 7-Zip | untuk build APK |
+| SIMRS Khanza | backend wajib ada |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Instalasi & Konfigurasi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 1. Clone & install dependensi
+
+```bash
+git clone <repo-url> epasien-mobile
+cd epasien-mobile
+composer install
+npm install
+```
+
+### 2. Konfigurasi `.env`
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Edit `.env` sesuaikan:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+
+# URL server SIMRS tempat epasien/api/v2/ berjalan
+EPASIEN_BASE_URL=http://IP_SERVER_RS
+
+# NativePHP Android
+NATIVEPHP_APP_ID=com.namaorganisasi.epasien
+NATIVEPHP_APP_VERSION=1.0.0
+NATIVEPHP_GRADLE_PATH="path/ke/jdk-17"
+NATIVEPHP_ANDROID_SDK_LOCATION="path/ke/android-sdk"
+
+# Keystore untuk signing APK release
+ANDROID_KEYSTORE_PATH=nama-release.keystore
+ANDROID_KEYSTORE_PASSWORD=password_kuat
+ANDROID_KEY_ALIAS=nama_alias
+ANDROID_KEY_PASSWORD=password_kuat
+```
+
+### 3. Build APK
+
+```bash
+php artisan native:build android
+```
+
+---
+
+## Backend (epasien)
+
+Aplikasi ini membutuhkan backend **epasien** (PHP native) yang terinstal di server dengan SIMRS Khanza. Lihat repositori `epasien` untuk panduan instalasi backend.
+
+---
+
+## Lisensi & Kredit
+
+**EPasien Mobile** adalah perangkat lunak bebas dan open source.
+
+- Bebas digunakan, dimodifikasi, dan didistribusikan
+- **Dilarang keras diperjualbelikan** dalam bentuk apapun, baik source code maupun APK
+- Jika dimodifikasi atau didistribusikan ulang, tetap cantumkan kredit asli
+
+---
+
+## Dukungan
+
+Jika aplikasi ini bermanfaat bagi Anda, Anda bisa memberikan dukungan melalui:
+
+**Transfer Bank BSI**
+- Atas Nama: **Puja M Alca**
+- No. Rekening: **7190075731**
+
+Setiap dukungan sangat berarti dan membantu pengembangan aplikasi ini. Terima kasih!
+
+---
+
+## Tech Stack
+
+- [Laravel 10](https://laravel.com)
+- [NativePHP for Android](https://nativephp.com)
+- [SIMRS Khanza](https://github.com/mas-elkhanza/SIMRS-Khanza) (backend)
+- Vanilla JS + Blade Templates
+- Firebase Cloud Messaging (notifikasi)
